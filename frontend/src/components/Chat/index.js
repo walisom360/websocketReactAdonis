@@ -8,14 +8,25 @@ export default function Chat() {
 	const [ status, setStatus ] = useState('');
 	const [ name, setName ] = useState('');
 	const [ digited, setDigited ] = useState(true);
+	const [ data, setData ] = useState(0);
 
 	const [ texto, setTexto ] = useState('');
 	const [ array, setArray ] = useState([ { name: '', text: '' } ]);
 
 	const chat = ws.getSubscription('chat') || ws.subscribe('chat');
 
+	//const number = ws.getSubscription('number') || ws.subscribe('number');
+
 	// const get = ws.getSubscription('message') || ws.subscribe('message');
 	useEffect(() => {
+		var data = 0;
+		setInterval(function() {
+			chat.emit('number', data);
+			data++;
+
+			console.log(data);
+		}, 1000);
+
 		ws.on('open', () => {
 			setStatus('online');
 		});
@@ -44,10 +55,15 @@ export default function Chat() {
 		setArray([ ...array, { name: data.name, text: data.text } ]);
 	});
 
+	chat.on('number', (data) => {
+		setData(data);
+	});
+
 	return (
 		<div id="content">
 			<header>
 				<div id="status" className={status} />
+				<h6>{data}</h6>
 			</header>
 
 			<section>

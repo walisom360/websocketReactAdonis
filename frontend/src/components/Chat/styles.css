@@ -55,3 +55,10 @@ li {
 b {
 	margin-right: 8px;
 }
+
+header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}

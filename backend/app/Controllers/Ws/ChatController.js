@@ -12,6 +12,12 @@ class ChatController {
 
 		console.log(data.text);
 	}
+
+	onNumber(data) {
+		this.socket.broadcastToAll('number', data);
+
+		console.log(data);
+	}
 }
 
 module.exports = ChatController;
